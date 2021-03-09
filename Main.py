@@ -1,5 +1,6 @@
 from Sensores import Sensores
-
+from Mongo import Database2
+from Mysql import Mysql
 def menu():
     print("------------")
     print("1-Sensor Temperatura Y Humedad")
@@ -33,7 +34,7 @@ while ciclo:
                 #CALCULANDO TEMPERATURA Y HUMEDAD
 
                 #GUARDANDO DATOS EN MYSQL
-                mysql = Database('localhost','administrador','admin','sensores_python')
+                mysql = Mysql('localhost','administrador','admin','sensores_python')
                 sql = 'INSERT INTO temperatura_humedad (temperatura, humedad) VALUES ('+ data.temperatura +', '+ data.humedad +');'
                 mysql.insert(sql)
                 mysql.close()
@@ -50,18 +51,27 @@ while ciclo:
             elif opcion == "2":
                 sql = 'SELECT * FROM sensores_python.temperatura_humedad order by id DESC LIMIT 1'
                 #CONSULTA EN MYSQL
-                resultado = Database('localhost','administrador','admin','sensores_python')
+                resultado = Mysql('localhost','administrador','admin','sensores_python')
                 dato = resultado.select_one(sql)
                 print()
                 print("Id: ", dato[0])
                 print("Temperatura: ", dato[1])
                 print("Humedad: ", dato[2])
-                mongo = ''
+                print("Guardando datos en MySql")
+
+                mongo = Database2('localhost','Sensores','Temperatura_Humedad')
+                mongo2 = 'db.Sensores.insert '+ (data.temperatura + ',' + data.humedad)
+                mongo.insert(mongo2)
+                print()
+                print("Id: ", dato[0])
+                print("Temperatura: ", dato[1])
+                print("Humedad: ", dato[2])
+                print("Guardando datos en Mongo")
             
             elif opcion == "3":
                 sql = 'SELECT * FROM temperatura_humedad'
                 #CONSULTA EN MYSQL
-                query = Database('localhost','administrador','admin','sensores_python')
+                query = Mysql('localhost','administrador','admin','sensores_python')
                 resultados = query.select(sql)
                 print("---Datos---")
                 for columna in resultados:
@@ -72,8 +82,17 @@ while ciclo:
                     print("_____\n")
                 query.close()
                 #CONSULTA EN MYSQL
-
-                #aqui para mongo
+                mg = 'db.find({}).pretty()'
+                mongo = Database2('localhost','Sensores','Temperatura_Humedad')
+                mongo2 = 'db.find'({ + dato.temperatura + ','+ dato.humedad })
+                resultadosM = mongo2.select(mg)
+                for col in resultadosM:
+                    print("_____")
+                    print("Id: ", columna[0])
+                    print("Temperatura: ", columna[1])
+                    print("Humedad: ", columna[2])
+                    print("_____\n")
+                mongo.close()
         print("opcion 1")
 
     elif opcion == "2":

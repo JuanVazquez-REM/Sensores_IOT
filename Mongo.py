@@ -3,10 +3,6 @@ from pymongo import database
 
 class Database2:
 
-    def __init__(self, cluster, client, col,db):
-        client = pymongo.MongoClient("mongodb+srv://smartHome:eduardo1234@cluster0.jbitb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-        db = client['Sensores']
-        col = db['Temperatura_humedad']
 
     def __init__(client, col,db):
         client = pymongo.MongoClient('localhost')
