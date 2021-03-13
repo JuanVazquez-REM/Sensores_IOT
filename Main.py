@@ -1,3 +1,4 @@
+from typing import Collection
 from Sensores import Sensores
 from Mongo import Database2
 from Mysql import Mysql
@@ -50,10 +51,11 @@ while ciclo:
 
                 #GUARDANDO DATOS EN MONGODB
                 #CARLOS
-                mongo = Database2('localhost','Sensores','Temperatura_Humedad')
-                mongo2 = 'db.Sensores.insert '+ (data.temperatura + ',' + data.humedad)
-                mongo.insert(mongo2)
-                mongo.close()
+                mongo = Database2('localhost','Sensores','Temperatura_Humedad',27017)
+                db = mongo.Temperatura_Humedad
+                collection = db.Sensores
+                collection.insert_one({"Temperatura" ,"Humedad"})
+                
                 #GUARDANDO DATOS EN MONGODB
                 print("Mongo...")
                 
@@ -79,17 +81,14 @@ while ciclo:
                 #CONSULTA EN MYSQL
 
                 #CONSULTA EN MONGODB
-                #CARLOS
+                mongo = Database2('localhost','Sensores','Temperatura_Humedad',27017)
+                db = mongo.Temperatura_Humedad
+                collection = db.Sensores
+                collection.find().sort({"$natural":-1}).limit(1).pretty()
+                print("Temperatura" ) #no logro buscar algo que me ayude
+                print("Humedad" ) #duda
                 print("Resultado Mongo")
                 print()
-                mongo = Database2('localhost','Sensores','Temperatura_Humedad')
-                mongo2 = 'db.Sensores.insert '+ (data.temperatura + ',' + data.humedad)
-                mongo.insert(mongo2)
-                print()
-                print("Id: ", dato[0])
-                print("Temperatura: ", dato[1])
-                print("Humedad: ", dato[2])
-                #CONSULTA EN MONGODB
                 
                 #CONSULTA EN ARCHIVO
                 #ROSA
@@ -117,20 +116,19 @@ while ciclo:
                 #CONSULTA EN MONGO
                 #CARLOS
                 
-                mg = 'db.find({}).pretty()'
-                mongo = Database2('localhost','Sensores','Temperatura_Humedad')
-                mongo2 = 'db.find'({ + dato.temperatura + ','+ dato.humedad })
-                resultadosM = mongo2.select(mg)
+                mongo = Database2('localhost','Sensores','Temperatura_Humedad',27017)
+                db = mongo.Temperatura_Humedad
+                collection = db.Sensores
+                collection.find().pretty()
                 print("Resultado MONGODB")
                 print()
-                for col in resultadosM:
-                    
+                for col in collection:
                     print("_____")
-                    print("Id: ", columna[0])
-                    print("Temperatura: ", columna[1])
-                    print("Humedad: ", columna[2])
+                    print("Id: ", )
+                    print("Temperatura: ", )
+                    print("Humedad: ", )
                     print("_____\n")
-                mongo.close()
+                
                 #CONSULTA EN MONGO
 
                 #CONSULTA EN ARCHIVO
@@ -175,7 +173,11 @@ while ciclo:
 
                 #GUARDANDO DATOS EN MONGODB
                 #CARLOS
-                #GUARDANDO DATOS EN MONGODB
+                
+                mongo = Database2('localhost','Sensores','PIR',27017)
+                db = mongo.PIR
+                collection = db.Sensores
+                collection.insert_one({"Movimiento" ,"Fecha" })
                 print("Mongo...")
                 
 
@@ -199,7 +201,13 @@ while ciclo:
 
                 #CONSULTA EN MONGODB
                 #CARLOS
-                print("Resultado MONGODB")
+                mongo = Database2('localhost','Sensores','PIR',27017)
+                db = mongo.PIR
+                collection = db.Sensores
+                collection.find().sort({"$natural":-1}).limit(1).pretty()
+                print("Movimiento" ) #no logro buscar algo que me ayude
+                print("Fecha" )
+                print("Resultado Mongo")
                 print()
                 #CONSULTA EN MONGODB
                 
@@ -227,6 +235,16 @@ while ciclo:
 
                 #CONSULTA EN MONGO
                 #CARLOS
+                mongo = Database2('localhost','Sensores','PIR',27017)
+                db = mongo.PIR
+                collection = db.Sensores
+                collection.find().pretty()
+                
+                for col in collection:
+                    print("_____")
+                    print("Movimiento: ", )
+                    print("Fecha: ", )
+                    print("_____\n")
                 print("Resultado MONGODB")
                 print()
                 #CONSULTA EN MONGO
@@ -275,6 +293,10 @@ while ciclo:
                 #GUARDANDO DATOS EN MONGODB
                 #CARLOS
                 #GUARDANDO DATOS EN MONGODB
+                mongo = Database2('localhost','Sensores','Ultra_sonico',27017)
+                db = mongo.Ultra_sonico
+                collection = db.Sensores
+                collection.insert_one({"Distancia" ,"Fecha" })
                 print("Mongo...")
                 
 
@@ -298,7 +320,13 @@ while ciclo:
 
                 #CONSULTA EN MONGODB
                 #CARLOS
-                print("Resultado MONGODB")
+                mongo = Database2('localhost','Sensores','Ultra_sonico',27017)
+                db = mongo.Ultra_sonico
+                collection = db.Sensores
+                collection.find().sort({"$natural":-1}).limit(1).pretty()
+                print("Movimiento" ) #no logro buscar algo que me ayude
+                print("Fecha" )
+                print("Resultado Mongo")
                 print()
                 #CONSULTA EN MONGODB
                 
@@ -326,6 +354,16 @@ while ciclo:
 
                 #CONSULTA EN MONGO
                 #CARLOS
+                mongo = Database2('localhost','Sensores','Ultra_sonico',27017)
+                db = mongo.Ultra_sonico
+                collection = db.Sensores
+                collection.find().pretty()
+                
+                for col in collection:
+                    print("_____")
+                    print("Movimiento: ", )
+                    print("Fecha: ", )
+                    print("_____\n")
                 print("Resultado MONGODB")
                 print()
                 #CONSULTA EN MONGO
